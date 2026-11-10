@@ -76,11 +76,9 @@ export function ReminderCard({ reminder: r, compact, ...a }: { reminder: Reminde
               <button className="secondary" onClick={() => a.onSnooze(10)}>
                 10 分钟后再说
               </button>
-              {r.kind !== 'leave' && (
-                <button className="link" onClick={() => a.onDismiss('group')}>
-                  今晚不再提醒
-                </button>
-              )}
+              <button className="link" onClick={() => a.onDismiss('group')}>
+                {r.kind === 'leave' ? '关闭提醒' : '今晚不再提醒'}
+              </button>
             </>
           )}
           {r.kind === 'block-start' && (

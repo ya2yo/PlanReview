@@ -192,6 +192,19 @@ describe('ReminderCenter', () => {
     expect(center.evaluate(snap())).toBeNull()
   })
 
+  it('自习室离开提醒关闭后不再提醒', () => {
+    const center = new ReminderCenter(time)
+    clock = local(21, 51)
+    const r = center.evaluate(snap())!
+    expect(r.kind).toBe('leave')
+    center.dismiss(r.id, 'group')
+    expect(center.evaluate(snap())).toBeNull()
+    clock = local(22, 5)
+    expect(center.evaluate(snap())).toBeNull()
+    clock = local(21, 51, 1)
+    expect(center.evaluate(snap())?.kind).toBe('leave')
+  })
+
   it('延长类提醒附带影响', () => {
     const center = new ReminderCenter(time)
     time.createBlock({ title: '物理', startAt: local(14, 40).toISOString(), endAt: local(15, 30).toISOString() })
