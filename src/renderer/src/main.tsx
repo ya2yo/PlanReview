@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import { FloatApp } from './float/FloatApp'
 import './styles.css'
+import './theme-nahida.css'
 
 // 同一份界面代码，悬浮窗通过 #float 进入
 const isFloat = location.hash === '#float'

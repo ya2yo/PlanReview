@@ -1,0 +1,231 @@
+/**
+ * 纳西妲（Nahida / 小吉祥草王 / 白草净华）主题样式覆盖层
+ * 设计调性：净善宫象牙白昼 / 须弥草木清辉 / 净善星夜 / 金绿饰边
+ */
+
+:root {
+  /* ---------- 基础色调：象牙白与净善草木 ---------- */
+  --bg: #f5f8f2;
+  --side: #eaf1e4;
+  --panel: #ffffff;
+  --sunken: #e5ece0;
+  --hover: #e2ecdc;
+  --line: #d5e0cf;
+  --line-soft: #e4eee0;
+  --text: #1d2b1a;
+  --muted: #5e7354;
+  --faint: #90a388;
+
+  /* ---------- 草元素主强调色 ---------- */
+  --accent: #5c9c38;
+  --accent-soft: #ecf5e6;
+  --accent-text: #417723;
+  --on-accent: #ffffff;
+
+  /* ---------- 状态与环境色 ---------- */
+  --danger: #b9422a;
+  --danger-soft: #fcf0ec;
+  --danger-line: #f6d1c7;
+  --warn: #966600;
+  --warn-soft: #fef7e6;
+  --warn-line: #f4dc9e;
+  --ok: #2c8846;
+  --ok-soft: #ebf7ee;
+  --ok-line: #c5e8cf;
+  --live: #54a829;
+  --now: #d93d3d;
+  --sleep: #5c54be;
+  --sleep-soft: rgba(92, 84, 190, 0.08);
+
+  /* ---------- 纳西妲金色与自然混色 ---------- */
+  --gold: #bfa052;
+  --gold-soft: #fbf7ec;
+  --gold-line: #eadcb2;
+  --mix: #ffffff;
+  --tint: 15%;
+  --input: #ffffff;
+  --btn-line: #c6d6bf;
+  --btn-line-hover: #a8c49e;
+
+  /* ---------- 弥散光影与浮层 ---------- */
+  --shadow: 0 8px 24px rgba(32, 54, 24, 0.08);
+  --shadow-lg: 0 20px 48px rgba(28, 48, 20, 0.16);
+  --backdrop: rgba(22, 33, 20, 0.38);
+  --toast: #21301d;
+
+  /* ---------- 图表配色 ---------- */
+  --chart-grid: #e2ece0;
+  --chart-axis: #c2d2be;
+  --chart-plan: #1d2b1a;
+
+  /* ---------- 悬浮窗 ---------- */
+  --float-bg: rgba(246, 250, 243, 0.94);
+  --float-line: rgba(92, 156, 56, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* ---------- 深色模式：善见地夜色与净善宫荧光 ---------- */
+    --bg: #151c14;
+    --side: #10160f;
+    --panel: #1c261b;
+    --sunken: #111810;
+    --hover: #243322;
+    --line: #2a3c27;
+    --line-soft: #202e1e;
+    --text: #e6ede3;
+    --muted: #8ea387;
+    --faint: #62765c;
+
+    /* 须弥草木夜光 */
+    --accent: #78be43;
+    --accent-soft: rgba(120, 190, 67, 0.16);
+    --accent-text: #9fe26d;
+    --on-accent: #ffffff;
+
+    --danger: #ff8e75;
+    --danger-soft: rgba(240, 100, 70, 0.14);
+    --danger-line: rgba(240, 100, 70, 0.35);
+    --warn: #f2c25c;
+    --warn-soft: rgba(242, 194, 92, 0.13);
+    --warn-line: rgba(242, 194, 92, 0.3);
+    --ok: #6ad696;
+    --ok-soft: rgba(74, 222, 128, 0.12);
+    --ok-line: rgba(74, 222, 128, 0.28);
+    --live: #6ed137;
+    --now: #ff6e6e;
+    --sleep: #a6a1ff;
+    --sleep-soft: rgba(140, 132, 255, 0.1);
+
+    --gold: #dfb764;
+    --gold-soft: rgba(223, 183, 100, 0.15);
+    --gold-line: rgba(223, 183, 100, 0.3);
+    --mix: #151c14;
+    --tint: 22%;
+    --input: #182117;
+    --btn-line: #334830;
+    --btn-line-hover: #466342;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.65);
+    --backdrop: rgba(0, 0, 0, 0.65);
+    --toast: #283726;
+
+    --chart-grid: #243522;
+    --chart-axis: #3d5439;
+    --chart-plan: #e6ede3;
+
+    --float-bg: rgba(21, 28, 20, 0.94);
+    --float-line: rgba(120, 190, 67, 0.22);
+  }
+}
+
+/* ==========================================================================
+   纳西妲草元素风格化细节定制
+   ========================================================================== */
+
+/* 品牌区：增加吉祥草萌芽花纹图标 */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.brand::before {
+  content: '☘';
+  font-size: 16px;
+  color: var(--accent);
+  filter: drop-shadow(0 0 4px rgba(92, 156, 56, 0.45));
+}
+
+/* 导航项：激活态增加左侧草绿标定条与柔和圆角 */
+.nav-item {
+  border-radius: 8px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-item.is-active {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-weight: 600;
+  border-left: 3px solid var(--accent);
+  padding-left: 7px;
+}
+
+/* 强调按钮：草木清辉微渐变 */
+button {
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 88%, #204010) 100%);
+  border: 1px solid color-mix(in srgb, var(--accent) 80%, var(--gold));
+  box-shadow: 0 2px 6px rgba(92, 156, 56, 0.2);
+  transition: all 0.15s ease;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(1.08);
+  box-shadow: 0 3px 10px rgba(92, 156, 56, 0.32);
+}
+
+/* 次要描边按钮 */
+button.secondary {
+  background: var(--panel);
+  color: var(--text);
+  border-color: var(--btn-line);
+  box-shadow: none;
+}
+
+button.secondary:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--hover);
+  color: var(--accent-text);
+}
+
+/* 链接按钮 */
+button.link {
+  color: var(--accent-text);
+}
+
+/* 焦点光环：草神荧光 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 弹窗：顶部增加须弥金绿双色微饰线 */
+.dialog {
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+}
+
+/* 计时条：微光与荧光点 */
+.pulse {
+  background: var(--live);
+  box-shadow: 0 0 6px var(--live);
+}
+
+/* 计划块圆角与微光质感 */
+.block {
+  border-radius: 7px;
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
