@@ -340,7 +340,28 @@ async function loadRenderer(win: BrowserWindow, hash = ''): Promise<void> {
   }
 }
 
+function getTitleBarOverlayOptions() {
+  const dark = nativeTheme.shouldUseDarkColors
+  return {
+    color: dark ? '#151c14' : '#f5f8f2',
+    symbolColor: dark ? '#e6ede3' : '#1d2b1a',
+    height: 34
+  }
+}
+
+function updateTitleBarTheme(): void {
+  if (!mainWin || mainWin.isDestroyed()) return
+  if (process.platform === 'win32') {
+    try {
+      mainWin.setTitleBarOverlay(getTitleBarOverlayOptions())
+    } catch {
+      // ignore
+    }
+  }
+}
+
 function createMainWindow(): void {
+  const isWindows = process.platform === 'win32'
   mainWin = new BrowserWindow({
     width: 1280,
     height: 820,
@@ -351,6 +372,12 @@ function createMainWindow(): void {
     backgroundColor: windowBg(),
     autoHideMenuBar: true,
     show: false,
+    ...(isWindows
+      ? {
+          titleBarStyle: 'hidden' as const,
+          titleBarOverlay: getTitleBarOverlayOptions()
+        }
+      : {}),
     webPreferences: webPreferences()
   })
   mainWin.once('ready-to-show', () => {
@@ -374,7 +401,7 @@ function createMainWindow(): void {
 
 /** 窗口还没画出界面前的底色，和 CSS 里 --bg 一致，免得深色模式下先闪一下白 */
 function windowBg(): string {
-  return nativeTheme.shouldUseDarkColors ? '#1f1f22' : '#fbfbfa'
+  return nativeTheme.shouldUseDarkColors ? '#151c14' : '#f5f8f2'
 }
 
 function showMain(): void {
@@ -439,7 +466,10 @@ function toggleCapture(): void {
 
 function watchTheme(): void {
   // 跟随系统时，系统切换深浅色后主窗口底色也跟着换
-  nativeTheme.on('updated', () => mainWin?.setBackgroundColor(windowBg()))
+  nativeTheme.on('updated', () => {
+    mainWin?.setBackgroundColor(windowBg())
+    updateTitleBarTheme()
+  })
 }
 
 function createTray(): void {
@@ -515,6 +545,7 @@ function applySettings(s: Settings): void {
   // 界面的深浅色走 CSS 的 prefers-color-scheme，这里定下它取系统的还是固定一种
   nativeTheme.themeSource = s.theme
   mainWin?.setBackgroundColor(windowBg())
+  updateTitleBarTheme()
   updateFloatVisibility()
   updateTray()
 }

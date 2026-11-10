@@ -111,12 +111,23 @@ export function App() {
   if (!settings) return null
   // 类别入口打开时停在第一个现有类别
   const firstCategory = categories.find((c) => !c.archived)?.id ?? null
+  const isCustomTitleBar = window.api.win.platform === 'win32' || window.api.win.platform === undefined
 
   return (
-    <div className="app">
-      <nav className="sidebar" aria-label="视图">
-        <div className="brand">计划与复盘</div>
-        {nav({ kind: 'today' }, '今天')}
+    <div className="app-shell">
+      {isCustomTitleBar && (
+        <div className="window-titlebar">
+          <div className="window-titlebar-left">
+            <span className="brand">计划与复盘</span>
+          </div>
+          <div className="window-titlebar-drag" />
+        </div>
+      )}
+
+      <div className="app">
+        <nav className="sidebar" aria-label="视图">
+          {!isCustomTitleBar && <div className="brand">计划与复盘</div>}
+          {nav({ kind: 'today' }, '今天')}
         {nav({ kind: 'inbox' }, '收件箱', { count: inboxCount })}
         {nav({ kind: 'active' }, '待办')}
         {nav({ kind: 'done' }, '已结束')}
@@ -293,6 +304,7 @@ export function App() {
           }}
         />
       )}
+      </div>
     </div>
   )
 }
