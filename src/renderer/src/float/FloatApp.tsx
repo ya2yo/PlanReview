@@ -99,6 +99,13 @@ export function FloatApp() {
     inputRef.current?.blur()
   }
 
+  const stopRunning = () =>
+    run(async () => {
+      const res = await window.api.entries.stop({})
+      if (res?.discarded) setFlash({ text: '这次不到 1 分钟，未保存' })
+      else if (res) setFlash({ text: '已结束本次投入' })
+    })
+
   const left = running ? remainingMin(running) : null
 
   return (
@@ -119,8 +126,9 @@ export function FloatApp() {
           compact
           reminder={reminder}
           {...reminderActions(reminder, run, {
-            onStop: () => window.api.win.openMain('stop'),
-            onWrapUp: () => window.api.win.openMain('wrap-up')
+            onStop: stopRunning,
+            onWrapUp: () => window.api.win.openMain('wrap-up'),
+            onComplete: () => window.api.win.openMain('stop')
           })}
         />
       )}
@@ -139,7 +147,7 @@ export function FloatApp() {
               </span>
             )}
             <span className="spacer" />
-            <button className="small" onClick={() => window.api.win.openMain('stop')}>
+            <button className="small" onClick={stopRunning}>
               结束
             </button>
           </div>

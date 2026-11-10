@@ -12,6 +12,8 @@ export interface ReminderActions {
   onStartBlock: (blockId: string) => void
   onDismiss: (scope?: 'once' | 'group') => void
   onSnooze: (min: number) => void
+  /** 可选：打开完整结束/完成流程（如从悬浮窗唤起主窗口） */
+  onComplete?: () => void
 }
 
 /** 提醒卡片：主窗口和悬浮窗共用 */
@@ -98,9 +100,16 @@ export function ReminderCard({ reminder: r, compact, ...a }: { reminder: Reminde
             </>
           )}
           {r.kind === 'session-end' && (
-            <button className="link" onClick={() => a.onSnooze(5)}>
-              5 分钟后再问
-            </button>
+            <>
+              <button className="link" onClick={() => a.onSnooze(5)}>
+                5 分钟后再问
+              </button>
+              {a.onComplete && r.taskId && (
+                <button className="link" onClick={a.onComplete}>
+                  完成任务…
+                </button>
+              )}
+            </>
           )}
         </div>
       )}

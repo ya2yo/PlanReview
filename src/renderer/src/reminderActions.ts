@@ -19,7 +19,7 @@ export function useReminder(): Reminder | null {
 export function reminderActions(
   r: Reminder,
   run: <T>(fn: () => Promise<T>) => Promise<T | undefined>,
-  handlers: { onStop: () => void; onWrapUp: () => void }
+  handlers: { onStop: () => void; onWrapUp: () => void; onComplete?: () => void }
 ): ReminderActions {
   return {
     ...handlers,

@@ -469,7 +469,21 @@ function updateTray(): void {
         }
       },
       { type: 'separator' },
-      ...(running ? [{ label: `结束本次：${running.title}`, click: () => sendCommand('stop') }] : []),
+      ...(running
+        ? [
+            {
+              label: `结束本次：${running.title}`,
+              click: () => {
+                try {
+                  time.stop({})
+                  dataChanged()
+                } catch {
+                  // ignore
+                }
+              }
+            }
+          ]
+        : []),
       { label: '收尾', click: () => sendCommand('wrap-up') },
       { label: '今日复盘', click: () => sendCommand('review') },
       { label: '周复盘', click: () => sendCommand('weekly') },
